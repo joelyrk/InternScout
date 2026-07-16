@@ -12,8 +12,12 @@
     "workers/*"
   ],
   "scripts": {
-    "test": "node --test tests/foundation.test.mjs",
+    "dev": "npm run dev --workspace @internscout/web",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "node --test tests/foundation.test.mjs && npm run test --workspaces --if-present",
+    "format:check": "npm run format:check --workspaces --if-present",
     "verify": "node scripts/verify-foundation.mjs"
   }
 }
-

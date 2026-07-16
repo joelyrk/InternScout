@@ -2,14 +2,14 @@
 
 InternScout is an AI-assisted internship discovery and application copilot for computer science students in Singapore. It is a candidate-facing productivity tool: users review and submit applications themselves, and generated application content must be grounded in verified user-provided evidence.
 
-The repository is currently at **Phase 0.1: monorepo foundation**. The frontend and backend directories are placeholders; their runnable applications are introduced in Phases 0.2 and 0.3.
+The repository has completed **Phase 0.2: frontend skeleton**. The Next.js frontend is runnable, while the backend remains a placeholder until Phase 0.3.
 
 ## Repository layout
 
 ```text
 apps/
   api/                  FastAPI service (Phase 0.3)
-  web/                  Next.js application (Phase 0.2)
+  web/                  Next.js application
 packages/
   config/               Shared tooling configuration
   shared-types/         Shared or generated API schemas
@@ -52,25 +52,36 @@ Python 3.12+ will be required when the API is introduced in Phase 0.3.
    docker compose up -d
    ```
 
-4. Verify the repository foundation:
+4. Start the frontend:
+
+   ```bash
+   npm run dev
+   ```
+
+   Open `http://localhost:3000` to view the application. PostgreSQL and Redis are not yet used by the frontend, so Docker is optional during Phase 0.2.
+
+5. Verify the repository:
 
    ```bash
    npm run verify
+   npm run format:check
+   npm run lint
+   npm run typecheck
    npm test
+   npm run build
    docker compose --env-file .env.example config --quiet
    ```
 
-5. Stop local infrastructure when finished:
+6. Stop local infrastructure when finished:
 
    ```bash
    docker compose down
    ```
 
-No application server exists in Phase 0.1. Follow [BUILD_PLAN.md](BUILD_PLAN.md) for the sequential implementation phases and [AGENTS.md](AGENTS.md) for product, safety, privacy, and engineering requirements.
+Follow [BUILD_PLAN.md](BUILD_PLAN.md) for the sequential implementation phases and [AGENTS.md](AGENTS.md) for product, safety, privacy, and engineering requirements.
 
 ## Security and privacy
 
 - Never commit `.env` files, access tokens, resumes, contact details, or real candidate fixtures.
 - Do not automate application submission or access job sources without a documented permitted method.
 - Keep every generated resume claim traceable to verified evidence and require human approval before export.
-

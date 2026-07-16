@@ -10,6 +10,9 @@ const requiredPaths = [
   "README.md",
   "apps/api",
   "apps/web",
+  "apps/web/package.json",
+  "apps/web/src/app/layout.tsx",
+  "apps/web/src/app/page.tsx",
   "docker-compose.yml",
   "docs",
   "packages/config",
@@ -30,4 +33,3 @@ if (!gitignore.split("\n").includes(".env")) {
 }
 
 console.log(`Foundation verified: ${requiredPaths.length} required paths are present.`);
-

@@ -1,4 +1,13 @@
-# Web application
+# InternScout web
 
-The Next.js frontend will be initialized in Phase 0.2.
+The Next.js frontend for InternScout.
 
+Run commands from the repository root:
+
+```bash
+npm run dev --workspace @internscout/web
+npm run lint --workspace @internscout/web
+npm run typecheck --workspace @internscout/web
+npm run test --workspace @internscout/web
+npm run build --workspace @internscout/web
+```

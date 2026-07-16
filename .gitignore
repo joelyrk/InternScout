@@ -19,6 +19,7 @@ coverage/
 htmlcov/
 *.py[cod]
 __pycache__/
+*.tsbuildinfo
 
 # Virtual environments
 .venv/
@@ -33,4 +34,3 @@ venv/
 # Private exports and local object-storage data
 exports/
 storage/
-
