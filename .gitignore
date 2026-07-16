@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.npm/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build and test output
+.next/
+dist/
+build/
+coverage/
+.turbo/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+*.py[cod]
+__pycache__/
+
+# Virtual environments
+.venv/
+venv/
+
+# Local tooling and operating-system files
+.DS_Store
+*.log
+.idea/
+.vscode/
+
+# Private exports and local object-storage data
+exports/
+storage/
+
