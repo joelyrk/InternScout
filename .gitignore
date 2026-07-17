@@ -12,6 +12,8 @@ node_modules/
 dist/
 build/
 coverage/
+.coverage
+coverage.xml
 .turbo/
 .pytest_cache/
 .mypy_cache/

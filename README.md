@@ -2,13 +2,13 @@
 
 InternScout is an AI-assisted internship discovery and application copilot for computer science students in Singapore. It is a candidate-facing productivity tool: users review and submit applications themselves, and generated application content must be grounded in verified user-provided evidence.
 
-The repository has completed **Phase 0.2: frontend skeleton**. The Next.js frontend is runnable, while the backend remains a placeholder until Phase 0.3.
+The repository has completed **Phase 0.3: backend skeleton**. The Next.js frontend and FastAPI backend are independently runnable; typed communication between them arrives in Phase 0.4.
 
 ## Repository layout
 
 ```text
 apps/
-  api/                  FastAPI service (Phase 0.3)
+  api/                  FastAPI service
   web/                  Next.js application
 packages/
   config/               Shared tooling configuration
@@ -28,9 +28,9 @@ tests/                  Cross-project tests
 
 - Node.js 24 or newer
 - npm 11 or newer
+- Python 3.12 or newer
+- uv 0.11
 - Docker with Docker Compose
-
-Python 3.12+ will be required when the API is introduced in Phase 0.3.
 
 ## Local setup
 
@@ -38,6 +38,7 @@ Python 3.12+ will be required when the API is introduced in Phase 0.3.
 
    ```bash
    npm install
+   uv sync --project apps/api --locked
    ```
 
 2. Create a local environment file and replace the development-only database password if needed:
@@ -52,13 +53,18 @@ Python 3.12+ will be required when the API is introduced in Phase 0.3.
    docker compose up -d
    ```
 
-4. Start the frontend:
+4. Start the applications in separate terminals:
 
    ```bash
    npm run dev
+   uv run --project apps/api uvicorn internscout_api.main:app \
+     --reload \
+     --env-file .env \
+     --host 127.0.0.1 \
+     --port 8000
    ```
 
-   Open `http://localhost:3000` to view the application. PostgreSQL and Redis are not yet used by the frontend, so Docker is optional during Phase 0.2.
+   Open `http://localhost:3000` for the frontend and `http://localhost:8000/docs` for API documentation. PostgreSQL and Redis are not yet used by either application, so Docker remains optional.
 
 5. Verify the repository:
 
@@ -70,6 +76,12 @@ Python 3.12+ will be required when the API is introduced in Phase 0.3.
    npm test
    npm run build
    docker compose --env-file .env.example config --quiet
+   cd apps/api
+   uv lock --check
+   uv run ruff check .
+   uv run black --check .
+   uv run pyright
+   uv run pytest --cov=internscout_api --cov-report=term-missing
    ```
 
 6. Stop local infrastructure when finished:
