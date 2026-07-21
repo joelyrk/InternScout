@@ -2,7 +2,7 @@
 
 InternScout is an AI-assisted internship discovery and application copilot for computer science students in Singapore. It is a candidate-facing productivity tool: users review and submit applications themselves, and generated application content must be grounded in verified user-provided evidence.
 
-The repository has completed **Phase 0.3: backend skeleton**. The Next.js frontend and FastAPI backend are independently runnable; typed communication between them arrives in Phase 0.4.
+The repository has completed **Phase 0.4: connect frontend and backend**. The Next.js development page performs a runtime-validated health check against the FastAPI backend with timeout, readable error handling, and narrowly configured local CORS.
 
 ## Repository layout
 
@@ -41,10 +41,11 @@ tests/                  Cross-project tests
    uv sync --project apps/api --locked
    ```
 
-2. Create a local environment file and replace the development-only database password if needed:
+2. Create local environment files and replace the development-only database password if needed:
 
    ```bash
    cp .env.example .env
+   cp apps/web/.env.example apps/web/.env.local
    ```
 
 3. Start the local infrastructure placeholders:
@@ -64,7 +65,7 @@ tests/                  Cross-project tests
      --port 8000
    ```
 
-   Open `http://localhost:3000` for the frontend and `http://localhost:8000/docs` for API documentation. PostgreSQL and Redis are not yet used by either application, so Docker remains optional.
+   Open `http://localhost:3000/development` to verify the frontend-to-backend connection and `http://localhost:8000/docs` for API documentation. PostgreSQL and Redis are not yet used by either application, so Docker remains optional.
 
 5. Verify the repository:
 

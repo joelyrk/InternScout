@@ -6,6 +6,7 @@ import logging
 from typing import Literal
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict
 
 from internscout_api import __version__
@@ -52,6 +53,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         },
     )
     app.state.settings = app_settings
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=list(app_settings.cors_origins),
+        allow_credentials=True,
+        allow_methods=["GET"],
+        allow_headers=["Accept", "Content-Type"],
+        max_age=600,
+    )
     register_error_handlers(app)
 
     @app.get(

@@ -9,6 +9,7 @@ export const navigationItems = [
   { label: "Resume", href: "/resume" },
   { label: "Applications", href: "/applications" },
   { label: "Settings", href: "/settings" },
+  { label: "Development", href: "/development" },
 ] as const;
 
 export function Navigation() {

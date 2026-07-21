@@ -38,6 +38,10 @@ class Settings(BaseSettings):
     app_name: str = "InternScout API"
     environment: Environment = Environment.DEVELOPMENT
     log_level: LogLevel = LogLevel.INFO
+    cors_origins: tuple[str, ...] = (
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    )
 
 
 @lru_cache

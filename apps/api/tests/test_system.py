@@ -27,6 +27,35 @@ def test_ready(client: TestClient) -> None:
     }
 
 
+def test_health_allows_configured_frontend_origin(client: TestClient) -> None:
+    response = client.get("/health", headers={"Origin": "http://localhost:3000"})
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "http://localhost:3000"
+    assert response.headers["access-control-allow-credentials"] == "true"
+
+
+def test_health_does_not_allow_unconfigured_origin(client: TestClient) -> None:
+    response = client.get("/health", headers={"Origin": "https://untrusted.example"})
+
+    assert response.status_code == 200
+    assert "access-control-allow-origin" not in response.headers
+
+
+def test_health_preflight_allows_get_from_configured_origin(client: TestClient) -> None:
+    response = client.options(
+        "/health",
+        headers={
+            "Origin": "http://127.0.0.1:3000",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == "http://127.0.0.1:3000"
+    assert response.headers["access-control-allow-methods"] == "GET"
+
+
 def test_openapi_documents_system_endpoints(client: TestClient) -> None:
     response = client.get("/openapi.json")
 
