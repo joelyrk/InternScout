@@ -9,8 +9,11 @@ description = "FastAPI backend for the InternScout internship application copilo
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
 dependencies = [
+  "alembic>=1.16,<2",
   "fastapi>=0.116,<1",
+  "psycopg[binary]>=3.2,<4",
   "pydantic-settings>=2.10,<3",
+  "sqlalchemy>=2.0,<3",
   "uvicorn[standard]>=0.35,<1",
 ]
 
@@ -52,6 +55,9 @@ venv = ".venv"
 [tool.pytest.ini_options]
 addopts = ["--strict-config", "--strict-markers", "-ra"]
 testpaths = ["tests"]
+markers = [
+  "integration: requires the dedicated PostgreSQL test database",
+]
 
 [tool.coverage.run]
 branch = true

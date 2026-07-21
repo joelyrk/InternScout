@@ -11,6 +11,7 @@ from pydantic import BaseModel, ConfigDict
 
 from internscout_api import __version__
 from internscout_api.config import Environment, Settings, get_settings
+from internscout_api.database import create_database_engine, create_session_factory
 from internscout_api.errors import ErrorResponse, register_error_handlers
 
 logger = logging.getLogger(__name__)
@@ -53,6 +54,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         },
     )
     app.state.settings = app_settings
+    app.state.database_engine = create_database_engine(app_settings)
+    app.state.session_factory = create_session_factory(app.state.database_engine)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=list(app_settings.cors_origins),

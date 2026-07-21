@@ -2,7 +2,7 @@
 
 InternScout is an AI-assisted internship discovery and application copilot for computer science students in Singapore. It is a candidate-facing productivity tool: users review and submit applications themselves, and generated application content must be grounded in verified user-provided evidence.
 
-The repository has completed **Phase 0.4: connect frontend and backend**. The Next.js development page performs a runtime-validated health check against the FastAPI backend with timeout, readable error handling, and narrowly configured local CORS.
+The repository has completed **Phase 1.1: add PostgreSQL**. The API now has SQLAlchemy transaction/session helpers, a reversible Alembic baseline, and isolated PostgreSQL migration tests. The Next.js development page continues to provide a runtime-validated backend health check.
 
 ## Repository layout
 
@@ -48,10 +48,11 @@ tests/                  Cross-project tests
    cp apps/web/.env.example apps/web/.env.local
    ```
 
-3. Start the local infrastructure placeholders:
+3. Start local infrastructure and apply database migrations:
 
    ```bash
    docker compose up -d
+   uv run --project apps/api alembic -c apps/api/alembic.ini upgrade head
    ```
 
 4. Start the applications in separate terminals:
@@ -65,7 +66,7 @@ tests/                  Cross-project tests
      --port 8000
    ```
 
-   Open `http://localhost:3000/development` to verify the frontend-to-backend connection and `http://localhost:8000/docs` for API documentation. PostgreSQL and Redis are not yet used by either application, so Docker remains optional.
+   Open `http://localhost:3000/development` to verify the frontend-to-backend connection and `http://localhost:8000/docs` for API documentation. PostgreSQL is required for migrations and upcoming persistent features; Redis remains reserved for later worker phases.
 
 5. Verify the repository:
 
@@ -84,6 +85,9 @@ tests/                  Cross-project tests
    uv run pyright
    uv run pytest --cov=internscout_api --cov-report=term-missing
    ```
+
+   The API integration suite uses only `INTERNSCOUT_TEST_DATABASE_URL`. Its database name must end
+   in `_test` and differ from `INTERNSCOUT_DATABASE_URL`.
 
 6. Stop local infrastructure when finished:
 
